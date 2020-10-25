@@ -1,0 +1,12 @@
+{
+  "$schema": "projects_schema.json",
+  "$schema_name": "Projects Config",
+  "$schema_version": "0.1",
+  "description": "This is project definition file for category samples",
+
+  "category_name": "samples",
+
+  "simple_projects": [
+    "projectA","projectB"
+  ]
+}

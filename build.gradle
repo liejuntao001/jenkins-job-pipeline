@@ -59,6 +59,7 @@ dependencies {
     testPlugins 'org.jenkins-ci.plugins:ghprb:1.40.0'
     testPlugins 'org.jenkins-ci.plugins:token-macro:2.5'
     testPlugins 'org.jenkins-ci.plugins.workflow:workflow-cps-global-lib:2.7'
+    testPlugins 'org.jenkins-ci.plugins.workflow:workflow-job:2.29'
 
     // Run the following script in the Script Console of your Jenkins instance to generate
     // the above testPlugins list. (adapted from https://git.io/fjpUs)
