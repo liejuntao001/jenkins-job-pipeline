@@ -23,16 +23,18 @@ podTemplate(my_node) {
   node(my_node.label) {
     checkout scm
 
-    def job_category = 'samples'
-    if (params.JOB_CATEGORY) {
-      job_category = params.JOB_CATEGORY
+    stage ('deploy') {
+      def job_category = 'samples'
+      if (params.JOB_CATEGORY) {
+        job_category = params.JOB_CATEGORY
+      }
+      jobDsl targets: ["src/jobs/${job_category}/*.groovy", 'src/jobs/*.groovy'].join('\n'),
+          ignoreMissingFiles: true,
+          //sandbox: true
+          removedJobAction: 'DISABLE',
+          removedViewAction: 'DELETE',
+          lookupStrategy: 'SEED_JOB'
+      //additionalParameters: [message: 'Hello from pipeline', credentials: 'SECRET'],
     }
-    jobDsl targets: ["src/jobs/${job_category}/*.groovy", 'src/jobs/*.groovy'].join('\n'),
-        ignoreMissingFiles: true,
-        //sandbox: true
-        removedJobAction: 'DISABLE',
-        removedViewAction: 'DELETE',
-        lookupStrategy: 'SEED_JOB'
-    //additionalParameters: [message: 'Hello from pipeline', credentials: 'SECRET'],
   }
 }
