@@ -96,6 +96,24 @@ test {
     dependsOn tasks.resolveTestPlugins
     inputs.files sourceSets.jobs.groovy.srcDirs
 
+    // show stdout from tests
+    onOutput { dest, event -> print event.message }
+
+    // show test results
+    def results = []
+    afterTest { desc, result -> println "${desc.className.split("\\.")[-1]}: ${desc.name}: ${result.resultType}" }
+    afterSuite { desc, result ->
+        if (desc.className) {
+            results << result
+        }
+    }
+
+    // show summary
+    doLast {
+        println "Tests: ${results.sum { it.testCount }}, Failures: ${results.sum { it.failedTestCount }}" +
+            ", Errors: ${results.sum { it.exceptions.size() }}, Skipped: ${results.sum { it.skippedTestCount }}"
+    }
+
     systemProperty "http.proxyHost", System.getProperty('http.proxyHost')
     systemProperty "http.proxyPort", System.getProperty('http.proxyPort')
     systemProperty "https.proxyHost", System.getProperty('https.proxyHost')
